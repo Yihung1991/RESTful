@@ -1,11 +1,17 @@
-import React from 'react'
+import React,{useContext} from "react";
+import { FaTrashAlt } from "react-icons/fa";
+import ThemeContext from "../contexts/ThemeContext";
 
-function ListTable({rows}) {
+function ListTable({ rows,removeItem }) {
+  const {color, backgroundColor} = useContext(ThemeContext);
   return (
     <>
-        <table className="table">
+      <table className="table" style={{color, backgroundColor}}>
         <thead>
           <tr>
+            <th scope="col">
+              <FaTrashAlt />
+            </th>
             <th scope="col">#</th>
             <th scope="col">姓名</th>
             <th scope="col">手機</th>
@@ -18,6 +24,13 @@ function ListTable({rows}) {
           {rows.map((v, i) => {
             return (
               <tr key={v.sid}>
+                <td>
+                <a href="#/" onClick={(e)=>{
+                  e.preventDefault()
+                  removeItem(v.sid)
+                }}><FaTrashAlt /></a>
+                  
+                </td>
                 <td>{v.sid}</td>
                 <td>{v.name}</td>
                 <td>{v.mobile}</td>
@@ -30,7 +43,7 @@ function ListTable({rows}) {
         </tbody>
       </table>
     </>
-  )
+  );
 }
 
-export default ListTable
+export default ListTable;

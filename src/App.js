@@ -1,20 +1,24 @@
-import { BrowserRouter,Routes,Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Tmp1 from "./pages/Tmp1";
-import Tmp2 from "./pages/Tmp2";
+import Login from "./pages/Login";
 import AbList from "./pages/AbList";
 import Navbar from "./components/Navbar";
+import {ThemeContextProvider} from "./contexts/ThemeContext";
 function App() {
-  return <>
-    <BrowserRouter>
-    <Navbar/>
+  return (
+    <>
+      <ThemeContextProvider>
+        <BrowserRouter>
+          <Navbar />
           <Routes>
-            <Route path="/" element={<Tmp1 />}/>
-            <Route path="/tmp2" element={<Tmp2 />}/>
-            <Route path="/ablist" element={<AbList />}/>
+            <Route path="/" element={<Tmp1 />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/ab-list" element={<AbList />} />
           </Routes>
-       
-    </BrowserRouter>
-  </>;
+        </BrowserRouter>
+      </ThemeContextProvider>
+    </>
+  );
 }
 
 export default App;
