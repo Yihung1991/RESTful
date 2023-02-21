@@ -1,13 +1,17 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { LOGIN } from "../components/Api_config";
+import AuthContext from "../contexts/AuthContext";
 
 function Login() {
   const [myForm, setMyForm] = useState({
     account: "",
     password: "",
   });
+  const { setMyAuth } = useContext(AuthContext);
+  const navigate = useNavigate();
   return (
     <div className="container">
       <div className="row">
@@ -15,19 +19,29 @@ function Login() {
           <form
             onSubmit={(e) => {
               e.preventDefault();
-              axios.post(LOGIN,myForm).then(response=>{
-                console.log(response.data)
-                if(response.data.success){
-                    const {account,accountId,token}=response.data;
-                    localStorage.setItem('myAuth',JSON.stringify({
-                        account,
-                        accountId,
-                        token
-                    }));
-                }else{
-                    alert(response.data.error || '帳號或密碼錯誤')
+              axios.post(LOGIN, myForm).then((response) => {
+                console.log(response.data);
+                if (response.data.success) {
+                  const { account, accountId, token } = response.data;
+                  localStorage.setItem(
+                    "myAuth",
+                    JSON.stringify({
+                      account,
+                      accountId,
+                      token,
+                    })
+                  );
+                  setMyAuth({
+                    authorized: true,
+                    account,
+                    token,
+                    sid: accountId,
+                  });
+                  navigate("/");
+                } else {
+                  alert(response.data.error || "帳號或密碼錯誤");
                 }
-              })
+              });
             }}
           >
             <div className="mb-3">
