@@ -23,10 +23,5 @@ export const productData = [
     price: 60,
     img: "4.png",
   },
-  {
-    id: 18,
-    name: "水箭龜",
-    price: 60,
-    img: "learn_2.jpg",
-  },
+  
 ];
